@@ -1,50 +1,65 @@
 const recipes = [
-  { name: "Chickpea Salad", image: "images/1.png" },
-  { name: "Banana Smoothie", image: "images/2.png" },
-  { name: "Cheesy Garlic Bread", image: "images/3.png" },
-  { name: "Tuna Pasta Salad", image: "images/4.png" },
-  { name: "Apple Cinnamon Oatmeal", image: "images/5.png" },
-  { name: "Lemon Butter Fish", image: "images/6.png" },
-  { name: "Couscous Veg Bowl", image: "images/7.png" },
-  { name: "Roasted Broccoli", image: "images/8.png" },
-  { name: "Chicken Soup", image: "images/9.png" },
-  { name: "Chicken Wrap", image: "images/10.png" },
-  { name: "Bruschetta", image: "images/11.png" },
-  { name: "Peanut Butter Banana Toast", image: "images/12.png" },
-  { name: "Mushroom Soup", image: "images/13.png" },
-  { name: "Sweet Chili Chicken", image: "images/14.png" },
-  { name: "Strawberry Yogurt Jar", image: "images/15.png" }
+  { name:"Creamy Garlic Chicken", img:"images/1.png" },
+  { name:"Vegetarian Stir Fry", img:"images/2.png" },
+  { name:"Chocolate Lava Cake", img:"images/3.png" },
+  { name:"Herb Roasted Potatoes", img:"images/4.png" },
+  { name:"Creamy Spinach Pasta", img:"images/5.png" },
+  { name:"Honey Garlic Chicken Bites", img:"images/6.png" },
+  { name:"Vegetable Soup", img:"images/7.png" },
+  { name:"Garlic Butter Pasta", img:"images/8.png" },
+  { name:"Chicken Tacos", img:"images/9.png" },
+  { name:"Tomato Mozzarella Salad", img:"images/10.png" },
+  { name:"Egg Fried Rice", img:"images/11.png" },
+  { name:"Berry Yogurt Parfait", img:"images/12.png" },
+  { name:"Beef Meatballs", img:"images/13.png" },
+  { name:"Garlic Green Beans", img:"images/14.png" },
+  { name:"Simple Omelette", img:"images/15.png" },
+  { name:"Chickpea Salad", img:"images/16.png" },
+  { name:"Banana Smoothie", img:"images/17.png" },
+  { name:"Cheesy Garlic Bread", img:"images/18.png" },
+  { name:"Tuna Pasta Salad", img:"images/19.png" },
+  { name:"Apple Cinnamon Oats", img:"images/20.png" },
+  { name:"Lemon Butter Cod", img:"images/21.png" },
+  { name:"Veggie Couscous Bowl", img:"images/22.png" },
+  { name:"Garlic Lemon Broccoli", img:"images/23.png" },
+  { name:"Chicken Noodle Soup", img:"images/24.png" },
+  { name:"Avocado Chicken Wrap", img:"images/25.png" },
+  { name:"Tomato Basil Bruschetta", img:"images/26.png" },
+  { name:"Peanut Butter Banana Toast", img:"images/27.png" },
+  { name:"Creamy Mushroom Soup", img:"images/28.png" },
+  { name:"Sweet Chili Chicken", img:"images/29.png" },
+  { name:"Strawberry Overnight Oats", img:"images/30.png" }
 ];
 
-const container = document.getElementById("recipe-container");
-const searchInput = document.getElementById("search");
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
 
-function displayRecipes(filteredRecipes) {
-  container.innerHTML = "";
+function render(filter="") {
+  grid.innerHTML = "";
 
-  filteredRecipes.forEach(recipe => {
-    const card = document.createElement("div");
-    card.classList.add("card");
+  recipes
+    .filter(r => r.name.toLowerCase().includes(filter.toLowerCase()))
+    .forEach(r => {
+      const card = document.createElement("div");
+      card.className = "card";
 
-    card.innerHTML = `
-      <img src="${recipe.image}" alt="${recipe.name}">
-      <h3>${recipe.name}</h3>
-      <button>Add</button>
-    `;
+      card.innerHTML = `
+        <img src="${r.img}" alt="${r.name}">
+        <h3>${r.name}</h3>
+        <button onclick="save('${r.name}')">❤️ Add</button>
+      `;
 
-    container.appendChild(card);
-  });
+      grid.appendChild(card);
+    });
 }
 
-searchInput.addEventListener("input", () => {
-  const searchTerm = searchInput.value.toLowerCase();
+function save(name){
+  let favs = JSON.parse(localStorage.getItem("favs")) || [];
+  favs.push(name);
+  localStorage.setItem("favs", JSON.stringify(favs));
+  alert(name + " saved!");
+}
 
-  const filtered = recipes.filter(recipe =>
-    recipe.name.toLowerCase().includes(searchTerm)
-  );
+search.addEventListener("input", e => render(e.target.value));
 
-  displayRecipes(filtered);
-});
-
-// Load all recipes on start
-displayRecipes(recipes);
+render();
