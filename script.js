@@ -1,34 +1,50 @@
 const recipes = [
-"Creamy Garlic Chicken","Vegetarian Stir Fry","Chocolate Lava Cake",
-"Herb Roasted Potatoes","Creamy Spinach Pasta","Honey Garlic Chicken",
-"Vegetable Soup","Garlic Butter Pasta","Chicken Tacos",
-"Tomato Mozzarella Salad","Egg Fried Rice","Berry Yogurt Parfait",
-"Beef Meatballs","Garlic Green Beans","Simple Omelette",
-"Chickpea Salad","Banana Smoothie","Cheesy Garlic Bread",
-"Tuna Pasta Salad","Apple Cinnamon Oats","Lemon Butter Cod",
-"Veggie Couscous Bowl","Garlic Lemon Broccoli","Chicken Noodle Soup",
-"Avocado Chicken Wrap","Bruschetta","Peanut Butter Toast",
-"Mushroom Soup","Sweet Chili Chicken","Overnight Oats"
+  { name: "Chickpea Salad", image: "images/1.png" },
+  { name: "Banana Smoothie", image: "images/2.png" },
+  { name: "Cheesy Garlic Bread", image: "images/3.png" },
+  { name: "Tuna Pasta Salad", image: "images/4.png" },
+  { name: "Apple Cinnamon Oatmeal", image: "images/5.png" },
+  { name: "Lemon Butter Fish", image: "images/6.png" },
+  { name: "Couscous Veg Bowl", image: "images/7.png" },
+  { name: "Roasted Broccoli", image: "images/8.png" },
+  { name: "Chicken Soup", image: "images/9.png" },
+  { name: "Chicken Wrap", image: "images/10.png" },
+  { name: "Bruschetta", image: "images/11.png" },
+  { name: "Peanut Butter Banana Toast", image: "images/12.png" },
+  { name: "Mushroom Soup", image: "images/13.png" },
+  { name: "Sweet Chili Chicken", image: "images/14.png" },
+  { name: "Strawberry Yogurt Jar", image: "images/15.png" }
 ];
 
-const grid = document.getElementById("grid");
+const container = document.getElementById("recipe-container");
+const searchInput = document.getElementById("search");
 
-recipes.forEach((r,i)=>{
-const card = document.createElement("div");
-card.className="card";
+function displayRecipes(filteredRecipes) {
+  container.innerHTML = "";
 
-card.innerHTML = `
-<img src="https://picsum.photos/300?random=${i}">
-<h3>${r}</h3>
-<button onclick="save('${r}')">❤️ Add</button>
-`;
+  filteredRecipes.forEach(recipe => {
+    const card = document.createElement("div");
+    card.classList.add("card");
 
-grid.appendChild(card);
+    card.innerHTML = `
+      <img src="${recipe.image}" alt="${recipe.name}">
+      <h3>${recipe.name}</h3>
+      <button>Add</button>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+searchInput.addEventListener("input", () => {
+  const searchTerm = searchInput.value.toLowerCase();
+
+  const filtered = recipes.filter(recipe =>
+    recipe.name.toLowerCase().includes(searchTerm)
+  );
+
+  displayRecipes(filtered);
 });
 
-function save(name){
-let favs = JSON.parse(localStorage.getItem("favs")) || [];
-favs.push(name);
-localStorage.setItem("favs",JSON.stringify(favs));
-alert("Saved!");
-}
+// Load all recipes on start
+displayRecipes(recipes);
