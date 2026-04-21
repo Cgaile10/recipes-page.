@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cooking Hub</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cooking Hub</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <header class="hero">
+    <h1>🍽️ Cooking Hub</h1>
+    <p>Our Favourite Recipes</p>
+  </header>
 
-<header>
-<h1>🍽️ Cooking Hub</h1>
-<p>Our Favourite Recipes</p>
-<input type="text" id="search" placeholder="Search recipes...">
-</header>
+  <main class="main-content">
+    <div class="search-wrap">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search recipes..."
+      />
+    </div>
 
-<div class="grid" id="grid"></div>
+    <section id="recipes-container" class="recipes-grid"></section>
+  </main>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
